@@ -1,19 +1,7 @@
 	create or replace 
 	PACKAGE BODY    XX_ITEM_WARRANTY_CNV_PKG
 	AS
-	/*
-	 **************************************************************************************************
-	 * Package Specifications APPS.xx_item_warranty_cnv_pkg	
-	 * 
-	 * Description:
-	 * This package use to conversion data of item product and service warranty data
-	 * Change History
-	 * Version          Date                     Name                      Description of Change
-	 * -------          -------              ------------------------      --------------------------------- ----------------------
-	 * 1.0              10/13/2020            (Cognizant)                   Initial Creation...
-	 * 2.0				02/12/2021				Manoj Arava (CTS)			Transfer Count correction
-	 ****************************************************************************************************/
-	  gn_request_id NUMBER := fnd_global.CONC_REQUEST_ID;
+		  gn_request_id NUMBER := fnd_global.CONC_REQUEST_ID;
 	  gn_user_id NUMBER := FND_GLOBAL.USER_ID;
 	  PROCEDURE get_conc_details (p_req_id IN NUMBER
 								 ,x_con_prog_date OUT DATE

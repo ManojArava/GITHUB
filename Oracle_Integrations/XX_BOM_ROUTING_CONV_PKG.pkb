@@ -1,16 +1,7 @@
 create or replace PACKAGE BODY           XX_BOM_ROUTING_CONV_PKG
 											  
 AS
-    /******************************************************************************
-    name:       XX_BOM_ROUTING_CONV_PKG
-    purpose:    Routing CONVERSION PROGRAM
-    revisions:
-   ver          date                   author                    description
-   ---------  ----------           ---------------     ------------------------------------------------------
-	1.0       23/JUN/2020       		CTS                 	1. created this package.
-    2.0		  26/FEB/2021				CTS						Change Prerun to Setup and attchment issue change
-	3.0		  07/JUN/2021				CTS						Change to include operation code, referenced objects, Transit Resource and new DFF
-    *******************************************************************************/
+/*******************************************************************************/
      
 	  gn_user_id 				CONSTANT NUMBER:=FND_GLOBAL.USER_ID;
 	  gn_login_id 				CONSTANT NUMBER:=FND_GLOBAL.login_id;
@@ -22,7 +13,7 @@ AS
 		gc_verror CONSTANT VARCHAR2(2):='VE';
 		gn_conc_req_id CONSTANT NUMBER:=FND_GLOBAL.CONC_REQUEST_ID;
 		gd_conc_prog_date DATE;
-		gv_conc_prog_name VARCHAR2(200) :='OSTA BOM Routing Conversion';
+		gv_conc_prog_name VARCHAR2(200) :=' BOM Routing Conversion';
 		gv_user_name VARCHAR2(200) := FND_GLOBAL.USER_NAME;
 		gn_org_id CONSTANT NUMBER := FND_GLOBAL.ORG_ID;
 		gv_org_name CONSTANT HR_ALL_ORGANIZATION_UNITS_TL.name%type := FND_GLOBAL.ORG_NAME;

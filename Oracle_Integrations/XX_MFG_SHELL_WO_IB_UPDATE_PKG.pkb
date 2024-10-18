@@ -2,18 +2,8 @@ Create or replace
  package BODY customusr.XX_MFG_SHELL_WO_IB_UPDATE_PKG
 As
 
-/*
-/****************************************************************************************************
- * Procedure APPS.XX_UPDATE_ITEM_INSTANCE_PRC                                          							    *
- *                                                                                               					   *
- * Description:                                                                                   				  *
- * This PROCEDURE is used to change the ownership of existing and expired item instances  for given project          *
- * Change History                                                                                   *
- * Version          Date                     Name                      Description of Change        *
- * -------          -------              ------------------------      -----------------------------*
- * 1.0              4/12/2020            (Cognizant)                   Initial Creation...         *
- *                                                                                                  *
- ****************************************************************************************************/
+
+
 procedure main(	p_o_err_buff	  OUT VARCHAR2,
 				p_o_ret_code 	  OUT NUMBER,
 				p_project_number  IN VARCHAR2,

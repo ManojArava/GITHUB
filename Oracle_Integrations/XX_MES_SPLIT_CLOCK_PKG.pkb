@@ -1,14 +1,7 @@
 create or replace 
 PACKAGE BODY customusr.XX_MES_SPLIT_CLOCK_PKG 
 	AS
-/******************************************************************************
- NAME: customusr.XX_MES_SPLIT_CLOCK_PKG
-   PURPOSE: Mes split clocking to post negative transaction
-   REVISIONS:
-   Ver        Date        Author           		Description
-   ---------  ----------  ---------------  		------------------------------------
-   1.0        12/08/2020   Manoj Arava (CTS)    1.Initial Version,
-  ******************************************************************************/
+s
 		PROCEDURE mes_clocking(p_organization_id IN NUMBER,
 							   p_resource_id IN NUMBER,
 							   p_employee_id IN NUMBER,

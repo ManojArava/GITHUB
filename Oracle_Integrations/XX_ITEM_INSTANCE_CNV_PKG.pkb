@@ -1,18 +1,7 @@
 CREATE OR REPLACE
 PACKAGE BODY customusr.xx_item_instance_cnv_pkg
 AS
-  /*
-  **************************************************************************************************
-  * Package Specifications customusr.xx_item_instance_cnv_pkg              *
-  *                                                                                                 *
-  * Description:                                                                                    *
-  * This package use to conversion data of item instance data                                       *
-  * Change History                                                                                  *
-  * Version          Date                     Name                      Description of Change       *
-  * -------          -------              ------------------------      ----------------------------*
-  * 1.0              10/13/2020            (Cognizant)                   Initial Creation...        *
-  *                                                                                                 *
-  ***************************************************************************************************/
+  
   gn_request_id NUMBER := apps.fnd_global.CONC_REQUEST_ID;
   gn_user_id    NUMBER := apps.FND_GLOBAL.USER_ID;
 PROCEDURE get_conc_details(

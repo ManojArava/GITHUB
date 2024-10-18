@@ -1,20 +1,6 @@
-create or replace PACKAGE BODY CUSTOMUSR.XX_OSSA_BOM_CONV_PKG
+create or replace PACKAGE BODY CUSTOMUSR.XX_BOM_CONV_PKG
 AS
-/***************************************************************************************************
- * Package Body CUSTOMUSR.XX_OSSA_BOM_CONV_PKG
- * 
- * BOM_INVENTORY_COMPONENTS -- Standard Oracle Base table
- * BOM_BILL_OF_MATERIALS -- Standard Oracle Base table
- *
- * Description:
- * This package is used for Bill of Materials conversion in the Oracle system.
- *
- * Change History
- * Version          Date                     Name                      Description of Change
- * -------          -------              ------------------------      ---------------------------------
- * 1.0              05/05/2020           Manoj Arava (Cognizant)      Initial Creation...
- * 
- ****************************************************************************************************/
+
 /***************************************************************************************************
  * PROCEDURE FND_LOG
  * 
@@ -24,9 +10,9 @@ AS
  ****************************************************************************************************/
 	TYPE g_bom_rec IS RECORD
 		(
-		org_code					 customusr.xx_ossa_bom_conv_stg_tbl.org_code%TYPE,
-		assembly_item_num            customusr.xx_ossa_bom_conv_stg_tbl.assembly_item_num%TYPE,
-		alternate_bom                customusr.xx_ossa_bom_conv_stg_tbl.alternate_bom%TYPE
+		org_code					 customusr.xx_bom_conv_stg_tbl.org_code%TYPE,
+		assembly_item_num            customusr.xx_bom_conv_stg_tbl.assembly_item_num%TYPE,
+		alternate_bom                customusr.xx_bom_conv_stg_tbl.alternate_bom%TYPE
 		);
 
 	TYPE g_bom IS TABLE OF g_bom_rec;
@@ -35,23 +21,23 @@ AS
 
 	TYPE g_bom_comp IS RECORD
 		(
-		org_code					 customusr.xx_ossa_bom_conv_stg_tbl.org_code%TYPE,
-		assembly_item_num            customusr.xx_ossa_bom_conv_stg_tbl.assembly_item_num%TYPE,
-		line_item_num                customusr.xx_ossa_bom_conv_stg_tbl.line_item_num%TYPE,
-		BASIS_TYPE                        customusr.xx_ossa_bom_conv_stg_tbl.BASIS_TYPE%TYPE,
-		wip_supply_type			     customusr.xx_ossa_bom_conv_stg_tbl.wip_supply_type%TYPE,
-		optional	                 customusr.xx_ossa_bom_conv_stg_tbl.optional%TYPE,
-		quantity                     customusr.xx_ossa_bom_conv_stg_tbl.quantity%TYPE,
-		item_sequence_number         customusr.xx_ossa_bom_conv_stg_tbl.item_sequence_number%TYPE,
-		operation_sequence_number    customusr.xx_ossa_bom_conv_stg_tbl.operation_sequence_number%TYPE,
-		yield_of_component           customusr.xx_ossa_bom_conv_stg_tbl.yield_of_component%TYPE,
-		supply_subinventory          customusr.xx_ossa_bom_conv_stg_tbl.supply_subinventory%TYPE,
-		locator                      customusr.xx_ossa_bom_conv_stg_tbl.locator%TYPE,
-		alternate_bom                customusr.xx_ossa_bom_conv_stg_tbl.alternate_bom%TYPE,
-		sub_comp_item_num			 customusr.xx_ossa_bom_conv_stg_tbl.sub_comp_item_num%TYPE,
-		sub_comp_quantity			 customusr.xx_ossa_bom_conv_stg_tbl.sub_comp_quantity%TYPE,
-		enforce_integer_quantity	 customusr.xx_ossa_bom_conv_stg_tbl.enforce_integer_quantity%TYPE,
-		include_in_cost_rollup_code	 customusr.xx_ossa_bom_conv_stg_tbl.include_in_cost_rollup_code%TYPE
+		org_code					 customusr.xx_bom_conv_stg_tbl.org_code%TYPE,
+		assembly_item_num            customusr.xx_bom_conv_stg_tbl.assembly_item_num%TYPE,
+		line_item_num                customusr.xx_bom_conv_stg_tbl.line_item_num%TYPE,
+		BASIS_TYPE                        customusr.xx_bom_conv_stg_tbl.BASIS_TYPE%TYPE,
+		wip_supply_type			     customusr.xx_bom_conv_stg_tbl.wip_supply_type%TYPE,
+		optional	                 customusr.xx_bom_conv_stg_tbl.optional%TYPE,
+		quantity                     customusr.xx_bom_conv_stg_tbl.quantity%TYPE,
+		item_sequence_number         customusr.xx_bom_conv_stg_tbl.item_sequence_number%TYPE,
+		operation_sequence_number    customusr.xx_bom_conv_stg_tbl.operation_sequence_number%TYPE,
+		yield_of_component           customusr.xx_bom_conv_stg_tbl.yield_of_component%TYPE,
+		supply_subinventory          customusr.xx_bom_conv_stg_tbl.supply_subinventory%TYPE,
+		locator                      customusr.xx_bom_conv_stg_tbl.locator%TYPE,
+		alternate_bom                customusr.xx_bom_conv_stg_tbl.alternate_bom%TYPE,
+		sub_comp_item_num			 customusr.xx_bom_conv_stg_tbl.sub_comp_item_num%TYPE,
+		sub_comp_quantity			 customusr.xx_bom_conv_stg_tbl.sub_comp_quantity%TYPE,
+		enforce_integer_quantity	 customusr.xx_bom_conv_stg_tbl.enforce_integer_quantity%TYPE,
+		include_in_cost_rollup_code	 customusr.xx_bom_conv_stg_tbl.include_in_cost_rollup_code%TYPE
 		);
 
 	TYPE g_bom_comp_rec IS TABLE OF g_bom_comp;
@@ -110,7 +96,7 @@ AS
 	 apps.xx_comn_conv_debug_prc ( p_i_level =>NULL,
 						      p_i_proc_name => 'BOM Conversion',
 						      p_i_phase => 'VALIDATE_ORG',
-						      p_i_stgtable => 'xx_ossa_bom_conv_stg_tbl' ,
+						      p_i_stgtable => 'xx_bom_conv_stg_tbl' ,
 						      p_i_message => 'Exception while validating organization '||SQLCODE||' '||SQLERRM);
   END validate_org;
 /***************************************************************************************************
@@ -455,13 +441,13 @@ PROCEDURE BOM_VALIDATE(P_I_RUN_MODE IN VARCHAR2) AS
 				a.alternate_bom,--SELECT COLUMNS 
 				a.enforce_integer_quantity,
 				a.include_in_cost_rollup	
-	FROM customusr.xx_ossa_bom_conv_stg_tbl a
+	FROM customusr.xx_bom_conv_stg_tbl a
 	WHERE a.hdr_process_flag = 'N'
 	AND a.request_id = gn_conc_req_id
 	;
   CURSOR cur_bom_err_stg IS
     SELECT *
-	FROM customusr.xx_ossa_bom_conv_stg_tbl
+	FROM customusr.xx_bom_conv_stg_tbl
 	WHERE hdr_process_flag = 'VE'
 	AND request_id = gn_conc_req_id
 	;
@@ -469,23 +455,23 @@ PROCEDURE BOM_VALIDATE(P_I_RUN_MODE IN VARCHAR2) AS
 		(
 		ROWID UROWID,
 		-- write all columns written in cur_bom_stg
-		org_code					 customusr.xx_ossa_bom_conv_stg_tbl.org_code%TYPE,
-		assembly_item_num            customusr.xx_ossa_bom_conv_stg_tbl.assembly_item_num%TYPE,
-		unit_of_measure              customusr.xx_ossa_bom_conv_stg_tbl.unit_of_measure%TYPE,
-		line_item_num                customusr.xx_ossa_bom_conv_stg_tbl.line_item_num%TYPE,
-		sub_comp_item_num            customusr.xx_ossa_bom_conv_stg_tbl.sub_comp_item_num%TYPE,
-		basis                        customusr.xx_ossa_bom_conv_stg_tbl.basis%TYPE,
-		supply_type                  customusr.xx_ossa_bom_conv_stg_tbl.supply_type%TYPE,
-		optional_flag                customusr.xx_ossa_bom_conv_stg_tbl.optional_flag%TYPE,
-		quantity                     customusr.xx_ossa_bom_conv_stg_tbl.quantity%TYPE,
-		item_sequence_number         customusr.xx_ossa_bom_conv_stg_tbl.item_sequence_number%TYPE,
-		operation_sequence_number    customusr.xx_ossa_bom_conv_stg_tbl.operation_sequence_number%TYPE,
-		yield_of_component           customusr.xx_ossa_bom_conv_stg_tbl.yield_of_component%TYPE,
-		supply_subinventory          customusr.xx_ossa_bom_conv_stg_tbl.supply_subinventory%TYPE,
-		locator                      customusr.xx_ossa_bom_conv_stg_tbl.locator%TYPE,
-		alternate_bom                customusr.xx_ossa_bom_conv_stg_tbl.alternate_bom%TYPE,
-		enforce_integer_quantity	 customusr.xx_ossa_bom_conv_stg_tbl.enforce_integer_quantity%TYPE,
-		include_in_cost_rollup		 customusr.xx_ossa_bom_conv_stg_tbl.include_in_cost_rollup%TYPE
+		org_code					 customusr.xx_bom_conv_stg_tbl.org_code%TYPE,
+		assembly_item_num            customusr.xx_bom_conv_stg_tbl.assembly_item_num%TYPE,
+		unit_of_measure              customusr.xx_bom_conv_stg_tbl.unit_of_measure%TYPE,
+		line_item_num                customusr.xx_bom_conv_stg_tbl.line_item_num%TYPE,
+		sub_comp_item_num            customusr.xx_bom_conv_stg_tbl.sub_comp_item_num%TYPE,
+		basis                        customusr.xx_bom_conv_stg_tbl.basis%TYPE,
+		supply_type                  customusr.xx_bom_conv_stg_tbl.supply_type%TYPE,
+		optional_flag                customusr.xx_bom_conv_stg_tbl.optional_flag%TYPE,
+		quantity                     customusr.xx_bom_conv_stg_tbl.quantity%TYPE,
+		item_sequence_number         customusr.xx_bom_conv_stg_tbl.item_sequence_number%TYPE,
+		operation_sequence_number    customusr.xx_bom_conv_stg_tbl.operation_sequence_number%TYPE,
+		yield_of_component           customusr.xx_bom_conv_stg_tbl.yield_of_component%TYPE,
+		supply_subinventory          customusr.xx_bom_conv_stg_tbl.supply_subinventory%TYPE,
+		locator                      customusr.xx_bom_conv_stg_tbl.locator%TYPE,
+		alternate_bom                customusr.xx_bom_conv_stg_tbl.alternate_bom%TYPE,
+		enforce_integer_quantity	 customusr.xx_bom_conv_stg_tbl.enforce_integer_quantity%TYPE,
+		include_in_cost_rollup		 customusr.xx_bom_conv_stg_tbl.include_in_cost_rollup%TYPE
 		);
 
 	TYPE lt_bom IS TABLE OF xx_bom_rec;
@@ -542,19 +528,19 @@ PROCEDURE BOM_VALIDATE(P_I_RUN_MODE IN VARCHAR2) AS
    ----------------------------------------------------
    -- add request id to new records
    ----------------------------------------------------
-   UPDATE 	customusr.xx_ossa_bom_conv_stg_tbl
+   UPDATE 	customusr.xx_bom_conv_stg_tbl
    SET 	request_id  = gn_conc_req_id
    WHERE 	hdr_process_flag = 'N';
    ----------------------------------------------------
    -- check for duplicates
    ----------------------------------------------------
-   UPDATE customusr.xx_ossa_bom_conv_stg_tbl
+   UPDATE customusr.xx_bom_conv_stg_tbl
    SET hdr_process_flag = 'VE'
      , hdr_error_msg = 'Duplicate record found'
    WHERE ROWID IN (SELECT ROWID
                 FROM (SELECT ROWID, ROW_NUMBER () 
                       OVER (PARTITION BY assembly_item_num, org_code, line_item_num, operation_sequence_number, item_sequence_number, request_id  ORDER BY ROWID) AS ROW_NUMBER
-                      FROM customusr.xx_ossa_bom_conv_stg_tbl)
+                      FROM customusr.xx_bom_conv_stg_tbl)
                       WHERE ROW_NUMBER > 1); 
   COMMIT;
    ----------------------------------------------------
@@ -707,7 +693,7 @@ PROCEDURE BOM_VALIDATE(P_I_RUN_MODE IN VARCHAR2) AS
 	 END IF;
 	  IF (lc_err_flag = 'N' AND lc_err_flag1 = 'N' AND lc_err_flag2 = 'N' AND lc_err_flag3 = 'N'
 	      AND lc_err_flag4 = 'N' AND lc_err_flag5 = 'N' AND lc_err_flag6 = 'N' AND lc_err_flag7 = 'N' AND lc_err_flag8 = 'N' AND lc_err_flag9 = 'N' AND lc_err_flag10 = 'N') THEN
-		  UPDATE customusr.xx_ossa_bom_conv_stg_tbl
+		  UPDATE customusr.xx_bom_conv_stg_tbl
 		  SET hdr_process_flag = 'V'
 		   ,org_id = ln_org_id
 		   ,assembly_item_id = ln_ass_item_id
@@ -728,7 +714,7 @@ PROCEDURE BOM_VALIDATE(P_I_RUN_MODE IN VARCHAR2) AS
 	    ----------------------------------------------------
    -- check if bom exists
    ----------------------------------------------------
-		   UPDATE customusr.xx_ossa_bom_conv_stg_tbl xbct
+		   UPDATE customusr.xx_bom_conv_stg_tbl xbct
 		   SET hdr_process_flag = 'U'
 		  WHERE xbct.hdr_process_flag = 'V'
 		  AND 	xbct.request_id = gn_conc_req_id
@@ -749,7 +735,7 @@ PROCEDURE BOM_VALIDATE(P_I_RUN_MODE IN VARCHAR2) AS
     ----------------------------------------------------
    -- check if bom and its components also exists
    ----------------------------------------------------
-		   UPDATE customusr.xx_ossa_bom_conv_stg_tbl xbct
+		   UPDATE customusr.xx_bom_conv_stg_tbl xbct
 		   SET hdr_process_flag = 'UE'
 			 , hdr_error_msg = 'BOM Already Exists For the Combination of assembly item and component'
 			  WHERE xbct.hdr_process_flag = 'V'
@@ -772,7 +758,7 @@ PROCEDURE BOM_VALIDATE(P_I_RUN_MODE IN VARCHAR2) AS
 		lc_err_msg := lc_err_msg||':'||lc_err_msg1||':'||lc_err_msg2||':'
 		            ||lc_err_msg3||':'||lc_err_msg4||':'||lc_err_msg5||':'||lc_err_msg6||':'
 		            ||lc_err_msg7||':'||lc_err_msg8||':'||lc_err_msg9||':'||lc_err_msg10;
-		UPDATE customusr.xx_ossa_bom_conv_stg_tbl
+		UPDATE customusr.xx_bom_conv_stg_tbl
 		SET hdr_process_flag = 'VE'
 		   ,hdr_error_msg = lc_err_msg
 		WHERE request_id  = gn_conc_req_id
@@ -788,13 +774,13 @@ PROCEDURE BOM_VALIDATE(P_I_RUN_MODE IN VARCHAR2) AS
 
 
    -------------------------------------
-	UPDATE customusr.xx_ossa_bom_conv_stg_tbl stg
+	UPDATE customusr.xx_bom_conv_stg_tbl stg
 	SET hdr_process_flag = 'VE'
 	   ,hdr_error_msg = 'One of the records for the BOM has errored out'
 	WHERE request_id  = gn_conc_req_id
 	AND hdr_process_flag = 'V'
 	AND (org_code,assembly_item_num) in ( Select distinct org_code,assembly_item_num 
-										  from customusr.xx_ossa_bom_conv_stg_tbl 
+										  from customusr.xx_bom_conv_stg_tbl 
 										  where  request_id  = gn_conc_req_id 
 										  AND hdr_process_flag = 'VE'
 										  AND hdr_error_msg <> 'Duplicate record found'
@@ -803,7 +789,7 @@ PROCEDURE BOM_VALIDATE(P_I_RUN_MODE IN VARCHAR2) AS
    COMMIT;
 
    IF P_I_RUN_MODE = 'CONVERSION' THEN
-   UPDATE customusr.xx_ossa_bom_conv_stg_tbl xbct
+   UPDATE customusr.xx_bom_conv_stg_tbl xbct
 	SET hdr_process_flag = 'VE'
 	   ,hdr_error_msg = 'BOM Already Exists'
 	WHERE request_id  = gn_conc_req_id
@@ -816,7 +802,7 @@ PROCEDURE BOM_VALIDATE(P_I_RUN_MODE IN VARCHAR2) AS
    BEGIN
    SELECT COUNT(1)
    INTO ln_tot_rec_count
-   FROM customusr.xx_ossa_bom_conv_stg_tbl
+   FROM customusr.xx_bom_conv_stg_tbl
    WHERE request_id  = gn_conc_req_id
    ;
    EXCEPTION
@@ -826,7 +812,7 @@ PROCEDURE BOM_VALIDATE(P_I_RUN_MODE IN VARCHAR2) AS
   BEGIN
    SELECT COUNT(1)
    INTO ln_succ_rec_cnt
-   FROM customusr.xx_ossa_bom_conv_stg_tbl
+   FROM customusr.xx_bom_conv_stg_tbl
    WHERE request_id  = gn_conc_req_id
    AND hdr_process_flag = 'V'
    ;
@@ -861,7 +847,7 @@ PROCEDURE BOM_VALIDATE(P_I_RUN_MODE IN VARCHAR2) AS
 		 apps.xx_comn_pers_util_pkg.FND_LOG(RPAD('User Name ',55)||': '||gv_user_name);
 		   apps.xx_comn_pers_util_pkg.FND_LOG(RPAD('Requested Date ',55)||': '||gd_conc_prog_date);
 		 apps.xx_comn_pers_util_pkg.FND_LOG(RPAD('Completion Date ',55)||': '||SYSDATE);
-		   apps.xx_comn_pers_util_pkg.FND_LOG(RPAD('Table Name ', 55)||': '||  'customusr.xx_ossa_bom_conv_stg_tbl'    );
+		   apps.xx_comn_pers_util_pkg.FND_LOG(RPAD('Table Name ', 55)||': '||  'customusr.xx_bom_conv_stg_tbl'    );
 		   apps.xx_comn_pers_util_pkg.FND_LOG(' ');
 		   apps.xx_comn_pers_util_pkg.FND_LOG(' ');
 		   apps.xx_comn_pers_util_pkg.FND_LOG('Org Code,Assembly Item Number,Component Item Number, Operation Sequence, Item Sequence Number, Quantity, Supply Type, Subinventory, Locator, Substitute Item Number, Error Message ');
@@ -879,7 +865,7 @@ PROCEDURE BOM_VALIDATE(P_I_RUN_MODE IN VARCHAR2) AS
 	apps.xx_comn_conv_debug_prc ( p_i_level =>NULL,
 						p_i_proc_name => 'BOM Conversion',
 						p_i_phase => 'BOM_VALIDATE',
-						p_i_stgtable => 'xx_ossa_bom_conv_stg_tbl' ,
+						p_i_stgtable => 'xx_bom_conv_stg_tbl' ,
 						p_i_message => 'Error while Validating records'||SQLCODE||SQLERRM);
   END bom_validate;
 /***************************************************************************************************
@@ -895,7 +881,7 @@ PROCEDURE bom_create AS
       SELECT xbct.org_code
 			,xbct.assembly_item_num
 			,xbct.alternate_bom
-	  FROM 	customusr.xx_ossa_bom_conv_stg_tbl xbct
+	  FROM 	customusr.xx_bom_conv_stg_tbl xbct
 	  WHERE xbct.hdr_process_flag = 'V'
 	  AND 	xbct.request_id = gn_conc_req_id
 	  AND NOT EXISTS 
@@ -925,7 +911,7 @@ PROCEDURE bom_create AS
 	         sub_comp_quantity,
 			 enforce_integer_quantity,
 			 include_in_cost_rollup_code	
-	  FROM 	customusr.xx_ossa_bom_conv_stg_tbl stg
+	  FROM 	customusr.xx_bom_conv_stg_tbl stg
 	  WHERE hdr_process_flag = 'V'
 	  AND 	request_id = gn_conc_req_id
 	  AND 	assembly_item_num = p_assembly_item_num
@@ -937,7 +923,7 @@ PROCEDURE bom_create AS
           ,xbct.assembly_item_id
          	,xbct.org_code
           ,xbct.org_id
-	  FROM 	customusr.xx_ossa_bom_conv_stg_tbl xbct
+	  FROM 	customusr.xx_bom_conv_stg_tbl xbct
 	  WHERE xbct.hdr_process_flag = 'V'
 	  AND 	xbct.request_id = gn_conc_req_id
 	  AND EXISTS 
@@ -950,7 +936,7 @@ PROCEDURE bom_create AS
 	  ;*/
 	CURSOR cur_bom_err_stg IS
       SELECT *
-	  FROM customusr.xx_ossa_bom_conv_stg_tbl
+	  FROM customusr.xx_bom_conv_stg_tbl
 	  WHERE hdr_process_flag = 'E'
 	  AND request_id = gn_conc_req_id
 	  ;
@@ -1001,7 +987,7 @@ PROCEDURE bom_create AS
 	-- add request id to Validated records
 	----------------------------------------------------
 
-    UPDATE  customusr.xx_ossa_bom_conv_stg_tbl k
+    UPDATE  customusr.xx_bom_conv_stg_tbl k
     SET     request_id  = gn_conc_req_id,
 			TRX_TYPE = 'CONVERSION'
     WHERE   hdr_process_flag in ('V')    
@@ -1117,7 +1103,7 @@ PROCEDURE bom_create AS
                               );
 	  IF (lv_return_status = apps.fnd_api.g_ret_sts_success) THEN
 	    ln_success_count := ln_success_count + 1;
-		UPDATE 	customusr.xx_ossa_bom_conv_stg_tbl
+		UPDATE 	customusr.xx_bom_conv_stg_tbl
 		SET hdr_process_flag = 'S'
 		WHERE 	request_id  = gn_conc_req_id
 		AND 	assembly_item_num = gn_bom_tbl(c_new_bom_rec).assembly_item_num
@@ -1135,7 +1121,7 @@ PROCEDURE bom_create AS
           fnd_log(to_char(i)||':'||l_error_table(i).message_text);
 		  --lv_api_error : = lv_api_error || l_error_table(i).message_text;
         END LOOP; 
-		UPDATE 	customusr.xx_ossa_bom_conv_stg_tbl
+		UPDATE 	customusr.xx_bom_conv_stg_tbl
 		SET 	hdr_process_flag = 'E'
 		       ,hdr_error_msg = 'BOM create API has returned error. Please refer log file '--|| lv_api_error
 		WHERE 	request_id  = gn_conc_req_id
@@ -1152,13 +1138,13 @@ PROCEDURE bom_create AS
 
     SELECT COUNT(1)
     INTO ln_succ_rec_cnt
-    FROM customusr.xx_ossa_bom_conv_stg_tbl
+    FROM customusr.xx_bom_conv_stg_tbl
     WHERE request_id  = gn_conc_req_id
     AND hdr_process_flag = 'S'
     ;
 	SELECT COUNT(1)
     INTO ln_err_rec_cnt
-    FROM customusr.xx_ossa_bom_conv_stg_tbl
+    FROM customusr.xx_bom_conv_stg_tbl
     WHERE request_id  = gn_conc_req_id
     AND hdr_process_flag = 'E'
     ;
@@ -1198,7 +1184,7 @@ PROCEDURE bom_create AS
       apps.xx_comn_conv_debug_prc ( p_i_level =>NULL,
 							p_i_proc_name => 'BOM Conversion',
 							p_i_phase => 'BOM_CREATE',
-							p_i_stgtable => 'xx_ossa_bom_conv_stg_tbl' ,
+							p_i_stgtable => 'xx_bom_conv_stg_tbl' ,
 							p_i_message => 'Error while Creating records'||SQLCODE||SQLERRM);
 	END bom_create;
 /***************************************************************************************************
@@ -1214,7 +1200,7 @@ PROCEDURE bom_update AS
       SELECT xbct.org_code
 			,xbct.assembly_item_num
 			,xbct.alternate_bom
-	  FROM 	customusr.xx_ossa_bom_conv_stg_tbl xbct
+	  FROM 	customusr.xx_bom_conv_stg_tbl xbct
 	  WHERE xbct.hdr_process_flag IN ('U','UE')
 	  AND 	xbct.request_id = gn_conc_req_id
 	  GROUP BY xbct.assembly_item_num,xbct.org_code,xbct.alternate_bom;
@@ -1238,7 +1224,7 @@ PROCEDURE bom_update AS
 	         sub_comp_quantity,
 			 enforce_integer_quantity,
 			 include_in_cost_rollup_code	
-	  FROM 	customusr.xx_ossa_bom_conv_stg_tbl stg
+	  FROM 	customusr.xx_bom_conv_stg_tbl stg
 	  WHERE hdr_process_flag = 'U'
 	  AND 	request_id = gn_conc_req_id
 	  AND 	assembly_item_num = p_assembly_item_num
@@ -1263,7 +1249,7 @@ PROCEDURE bom_update AS
 	         sub_comp_quantity,
 			 enforce_integer_quantity,
 			 include_in_cost_rollup_code	  	  
-	  FROM 	customusr.xx_ossa_bom_conv_stg_tbl stg
+	  FROM 	customusr.xx_bom_conv_stg_tbl stg
 	  WHERE hdr_process_flag = 'UE'
 	  AND 	request_id = gn_conc_req_id
 	  AND 	assembly_item_num = p_assembly_item_num
@@ -1271,7 +1257,7 @@ PROCEDURE bom_update AS
 	  ;
 	CURSOR cur_bom_err_stg IS
       SELECT *
-	  FROM customusr.xx_ossa_bom_conv_stg_tbl
+	  FROM customusr.xx_bom_conv_stg_tbl
 	  WHERE hdr_process_flag = 'E'
 	  AND request_id = gn_conc_req_id
 	  ;
@@ -1322,7 +1308,7 @@ PROCEDURE bom_update AS
 	-- add request id to Validated records
 	----------------------------------------------------
 
-    UPDATE  customusr.xx_ossa_bom_conv_stg_tbl k
+    UPDATE  customusr.xx_bom_conv_stg_tbl k
     SET     request_id  = gn_conc_req_id,
 			TRX_TYPE = 'INTERFACE'
     WHERE   hdr_process_flag in ('U','UE')    
@@ -1489,7 +1475,7 @@ PROCEDURE bom_update AS
 	  IF (lv_return_status = apps.fnd_api.g_ret_sts_success) THEN
 	    ln_success_count := ln_success_count + 1;
 		fnd_log('BOM update API success.');
-		UPDATE 	customusr.xx_ossa_bom_conv_stg_tbl
+		UPDATE 	customusr.xx_bom_conv_stg_tbl
 		SET hdr_process_flag = 'S'
 		WHERE 	request_id  = gn_conc_req_id
 		AND 	assembly_item_num = gn_bom_tbl(c_update_bom_rec).assembly_item_num
@@ -1507,7 +1493,7 @@ PROCEDURE bom_update AS
           fnd_log(to_char(i)||':'||l_error_table(i).entity_index||':'||l_error_table(i).table_name);
           fnd_log(to_char(i)||':'||l_error_table(i).message_text);
         END LOOP; 
-		UPDATE 	customusr.xx_ossa_bom_conv_stg_tbl
+		UPDATE 	customusr.xx_bom_conv_stg_tbl
 		SET 	hdr_process_flag = 'E'
 		       ,hdr_error_msg = 'BOM update API has returned error. Please refer log file'
 		WHERE 	request_id  = gn_conc_req_id
@@ -1524,13 +1510,13 @@ PROCEDURE bom_update AS
 
     SELECT COUNT(1)
     INTO ln_succ_rec_cnt
-    FROM customusr.xx_ossa_bom_conv_stg_tbl
+    FROM customusr.xx_bom_conv_stg_tbl
     WHERE request_id  = gn_conc_req_id
     AND hdr_process_flag = 'S'
     ;
 	SELECT COUNT(1)
     INTO ln_err_rec_cnt
-    FROM customusr.xx_ossa_bom_conv_stg_tbl
+    FROM customusr.xx_bom_conv_stg_tbl
     WHERE request_id  = gn_conc_req_id
     AND hdr_process_flag = 'E'
     ;
@@ -1568,7 +1554,7 @@ PROCEDURE bom_update AS
       apps.xx_comn_conv_debug_prc ( p_i_level =>NULL,
 							p_i_proc_name => 'BOM Conversion',
 							p_i_phase => 'bom_update',
-							p_i_stgtable => 'xx_ossa_bom_conv_stg_tbl' ,
+							p_i_stgtable => 'xx_bom_conv_stg_tbl' ,
 							p_i_message => 'Error while Creating records'||SQLCODE||SQLERRM);
 	END bom_update;
 /***************************************************************************************************
@@ -1598,14 +1584,14 @@ PROCEDURE bom_update AS
 		apps.xx_comn_conv_debug_prc ( p_i_level =>NULL,
 							p_i_proc_name => 'BOM Conversion',
 							p_i_phase => 'GET_CONC_DETAILS',
-							p_i_stgtable => 'xx_ossa_bom_conv_stg_tbl' ,
+							p_i_stgtable => 'xx_bom_conv_stg_tbl' ,
 							p_i_message => 'Error :'||SQLCODE||SQLERRM);
 	END GET_CONC_DETAILS;
 /***************************************************************************************************
  * PROCEDURE MAIN
  * 
  * Description:
- * This is the main procedure called by the concurrent program "OSSA INV On Hand Conversion".
+ * This is the main procedure called by the concurrent program " INV On Hand Conversion".
  * This program depending on P_I_RUN_MODE parameter either validates or creates itemc categories.
  *
  ****************************************************************************************************/
@@ -1629,8 +1615,8 @@ PROCEDURE bom_update AS
 		apps.xx_comn_conv_debug_prc ( p_i_level =>NULL,
 							p_i_proc_name => 'BOM Conversion',
 							p_i_phase => 'MAIN',
-							p_i_stgtable => 'xx_ossa_bom_conv_stg_tbl' ,
+							p_i_stgtable => 'xx_bom_conv_stg_tbl' ,
 							p_i_message => 'Error in Main'||SQLCODE||SQLERRM);
 	END MAIN;	
-END XX_OSSA_BOM_CONV_PKG;
+END XX_BOM_CONV_PKG;
 /
