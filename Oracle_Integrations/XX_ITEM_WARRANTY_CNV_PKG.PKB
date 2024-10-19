@@ -11,7 +11,7 @@
 	  AS
 	  BEGIN
 		SELECT fcr.request_date
-			  ,fcp.user_concurrent_program_name 
+			  ,fcp.user_concurrent_program_name --manoj
 		INTO  	x_con_prog_date,x_conc_prog_name
 		FROM 	fnd_concurrent_requests fcr,
 				fnd_concurrent_programs_tl fcp
