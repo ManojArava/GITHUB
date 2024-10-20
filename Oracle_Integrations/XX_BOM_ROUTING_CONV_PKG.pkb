@@ -12,7 +12,7 @@ AS
 		gc_succs CONSTANT VARCHAR2(1):='S';
 		gc_verror CONSTANT VARCHAR2(2):='VE';
 		gn_conc_req_id CONSTANT NUMBER:=FND_GLOBAL.CONC_REQUEST_ID;
-		gd_conc_prog_date DATE;
+		gd_conc_prog_date DATE; --
 		gv_conc_prog_name VARCHAR2(200) :=' BOM Routing Conversion';
 		gv_user_name VARCHAR2(200) := FND_GLOBAL.USER_NAME;
 		gn_org_id CONSTANT NUMBER := FND_GLOBAL.ORG_ID;
